@@ -5,13 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi AppWeb SPA - Diseño Ajustado</title>
     <style>
-        /* Reseteo básico y fondo gris opaco suave */
+        /* Reseteo y fondo con cuadrícula suave */
         html, body {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100vh;
-            background-color: #e2e2e2; /* Gris opaco suave */
+            background-color: #e2e2e2;
+            background-image: 
+                linear-gradient(rgba(160,160,160,0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(160,160,160,0.2) 1px, transparent 1px),
+                linear-gradient(rgba(160,160,160,0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(160,160,160,0.15) 1px, transparent 1px),
+                linear-gradient(rgba(160,160,160,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(160,160,160,0.1) 1px, transparent 1px);
+            background-size: 40px 40px, 40px 40px, 100px 100px, 100px 100px, 250px 250px, 250px 250px;
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -24,26 +32,29 @@
             position: fixed;
             left: 0;
             width: 100%;
-            background-color: #001f3f; /* Azul oscuro */
-            color: #ffffff; /* Texto blanco para contrastar con el fondo oscuro */
+            background-color: #001f3f;
+            color: #ffffff;
             z-index: 100;
             box-sizing: border-box;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        /* Barra Arriba */
         .barra-superior {
             top: 0;
             display: grid;
             grid-template-columns: 100px 1fr 100px;
             align-items: center;
             padding: 15px 30px;
+            gap: 10px;
         }
 
         .barra-superior .esquina-izq {
             font-weight: bold;
             font-size: 16px;
             text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .barra-superior .texto-central {
@@ -56,17 +67,81 @@
             font-weight: bold;
             font-size: 16px;
             text-align: right;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        /* Estilos glass para los textos destacados */
+        .glass-text {
+            background: rgba(0, 191, 255, 0.15);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 191, 255, 0.3);
+            color: #00bfff;
+            font-weight: bold;
+            display: inline-block;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0, 191, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .glass-text:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 191, 255, 0.25);
+        }
+
+        /* Estilo para "Contacto ahora" con destello verde */
+        .glass-contacto {
+            background: rgba(0, 255, 0, 0.12);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            padding: 6px 18px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 255, 0, 0.4);
+            color: #00ff00;
+            font-weight: bold;
+            display: inline-block;
+            white-space: nowrap;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.15);
+            animation: destelloVerde 2s infinite alternate;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .glass-contacto:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.4);
+        }
+
+        @keyframes destelloVerde {
+            0% { box-shadow: 0 0 5px rgba(0, 255, 0, 0.1); }
+            100% { box-shadow: 0 0 25px rgba(0, 255, 0, 0.5); }
         }
 
         /* Barra Abajo */
         .barra-inferior {
             bottom: 0;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             padding: 15px 20px;
             font-size: 15px;
             text-align: center;
+        }
+
+        .barra-inferior .inf-izq,
+        .barra-inferior .inf-der {
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .barra-inferior .inf-centro {
+            flex: 1;
+            margin: 0 10px;
         }
 
         /* ----- CONTENEDOR PRINCIPAL ----- */
@@ -80,9 +155,8 @@
             z-index: 50;
         }
 
-        /* ----- CONTENEDOR CENTRAL (TAMAÑO REDUCIDO) ----- */
         .contenedor-central {
-            width: 350px; /* Reducido para dar espacio a los círculos menores */
+            width: 350px;
             height: 350px;
             border-radius: 50%;
             border: 10px solid #0000ff;
@@ -103,7 +177,7 @@
         }
 
         .universo.activo .contenedor-central {
-            transform: scale(0.85); /* Se encoge un poco al abrir el menú */
+            transform: scale(0.85);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
         }
 
@@ -124,16 +198,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            
             top: 50%;
             left: 50%;
             margin-top: -75px;
             margin-left: -75px;
-            
             opacity: 0;
             pointer-events: none;
             z-index: 5;
-            
             transition: all 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55), filter 0.3s ease;
             transform: rotate(0deg) translateY(0px) rotate(0deg) scale(0);
         }
@@ -150,7 +221,6 @@
             z-index: 2;
         }
 
-        /* ----- COLORES SÓLIDOS ----- */
         .bg-judicial   { background-color: #e63946; }
         .bg-finanzas   { background-color: #2a9d8f; }
         .bg-astronomia { background-color: #3f37c9; }
@@ -159,8 +229,6 @@
         .bg-farmacia   { background-color: #e76f51; }
         .bg-hogar      { background-color: #48cae4; }
 
-        /* ----- POSICIONES MATEMÁTICAS EN ÓRBITA (RADIO AJUSTADO) ----- */
-        /* Se redujo el translateY a -280px para acercarlos al contenedor central */
         .universo.activo .item-orbital {
             opacity: 1;
             pointer-events: auto;
@@ -174,54 +242,400 @@
         .universo.activo .i6 { transform: rotate(257.14deg) translateY(-280px) rotate(-257.14deg) scale(1); }
         .universo.activo .i7 { transform: rotate(308.57deg) translateY(-280px) rotate(-308.57deg) scale(1); }
 
-        /* ----- RESPONSIVE ----- */
-        @media (max-width: 900px) { 
-            .universo { transform: scale(0.8); } /* Escala ajustada para móviles */
+        /* ===== PANEL LATERAL DERECHO (glass, sin X, separado) ===== */
+        .panel-lateral {
+            position: fixed;
+            right: 30px;
+            top: 25vh;
+            height: 50vh;
+            width: 320px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 0, 255, 0.4);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            z-index: 80;
+            padding: 25px 22px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            transition: transform 0.35s ease, opacity 0.35s ease;
+            transform: translateX(calc(110% + 30px));
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .panel-lateral.visible {
+            transform: translateX(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .panel-lateral h2 {
+            margin: 0 0 12px 0;
+            font-size: 22px;
+            color: #001f3f;
+            border-bottom: 2px solid rgba(0, 0, 255, 0.3);
+            padding-bottom: 8px;
+        }
+
+        .panel-lateral .seccion {
+            margin-top: 16px;
+        }
+
+        .panel-lateral .seccion strong {
+            display: block;
+            font-size: 16px;
+            color: #001f3f;
+            margin-bottom: 4px;
+        }
+
+        .panel-lateral .seccion p {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #222;
+        }
+
+        .panel-lateral .link-url {
+            word-break: break-all;
+            color: #001f3f;
+            text-decoration: underline;
+            font-weight: normal;
+        }
+
+        /* ===== MODAL DE CONTACTO ===== */
+        .contacto-wrapper {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .modal-contacto {
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            margin-bottom: 10px;
+            background: #ffffff;
+            color: #222;
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+            width: 200px;
+            z-index: 200;
+            font-size: 13px;
+            line-height: 1.6;
+            border-right: 3px solid #001f3f;
+            display: none;
+        }
+
+        .modal-contacto p {
+            margin: 4px 0;
+        }
+
+        .modal-contacto .destacado {
+            font-size: 16px;
+            font-weight: bold;
+            color: #00bfff !important; /* celeste */
+            margin-bottom: 6px;
+        }
+
+        .modal-contacto a {
+            color: #1e90ff !important; /* azul vibrante */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .modal-contacto a:hover {
+            text-decoration: underline;
+        }
+
+        .modal-contacto strong {
+            color: #001f3f;
+        }
+
+        /* ----- Elementos ocultos en móvil (por defecto) ----- */
+        .barra-superior .texto-central,
+        .barra-inferior .inf-izq,
+        .barra-inferior .inf-centro {
+            display: none;
+        }
+
+        /* En escritorio se muestran */
+        @media (min-width: 901px) {
+            .barra-superior .texto-central,
+            .barra-inferior .inf-izq,
+            .barra-inferior .inf-centro {
+                display: block;
+            }
+            .barra-superior {
+                grid-template-columns: 100px 1fr 100px;
+            }
+        }
+
+        /* ----- RESPONSIVE MÓVIL (pantallas hasta 900px) ----- */
+        @media (max-width: 900px) {
+            .universo { transform: scale(0.8); }
             
             .barra-superior {
                 grid-template-columns: 1fr;
-                gap: 5px;
-                padding: 10px;
+                padding: 10px 15px;
+                text-align: center;
             }
-            .barra-superior .esquina-izq, .barra-superior .esquina-der { text-align: center; }
+            .barra-superior .esquina-izq {
+                justify-content: center;
+                font-size: 18px;
+            }
+            .barra-superior .esquina-der {
+                display: none;
+            }
+            /* En móvil mostramos el nombre y proyectos juntos en un solo glass */
+            .barra-superior .mobil-titulo {
+                display: inline-block;
+            }
+
+            .barra-inferior {
+                justify-content: center;
+                padding: 10px 15px;
+            }
+            .barra-inferior .inf-izq,
+            .barra-inferior .inf-centro {
+                display: none;
+            }
+            .barra-inferior .inf-der {
+                font-size: 18px;
+            }
+
+            .panel-lateral {
+                width: 260px;
+                right: 15px;
+                top: 20vh;
+                height: 60vh;
+                padding: 20px 16px;
+                transform: translateX(calc(110% + 15px));
+            }
+            .panel-lateral h2 { font-size: 19px; }
+            .panel-lateral .seccion p { font-size: 14px; }
+            .modal-contacto { width: 180px; right: auto; left: 0; }
         }
-        @media (max-width: 600px) { .universo { transform: scale(0.6); } }
-        @media (max-width: 400px) { .universo { transform: scale(0.45); } }
+
+        @media (max-width: 600px) {
+            .universo { transform: scale(0.6); }
+            .panel-lateral {
+                width: 220px;
+                right: 10px;
+                top: 15vh;
+                height: 70vh;
+                padding: 16px 14px;
+            }
+            .panel-lateral h2 { font-size: 17px; }
+            .panel-lateral .seccion p { font-size: 13px; }
+            .modal-contacto { width: 160px; }
+        }
+
+        @media (max-width: 400px) {
+            .universo { transform: scale(0.45); }
+            .panel-lateral {
+                width: 180px;
+                right: 8px;
+                padding: 12px 10px;
+            }
+            .panel-lateral h2 { font-size: 15px; }
+            .panel-lateral .seccion p { font-size: 12px; }
+            .modal-contacto { width: 150px; padding: 10px 12px; }
+        }
     </style>
 </head>
 <body>
 
     <div class="barra barra-superior">
-        <div class="esquina-izq">Rómulo Fioravante</div>
-        <div class="texto-central">Aplicaciones Html-SPA. Sistemas digitales. Uso de Inteligencia Artificial para diseño y programación.</div>
-        <div class="esquina-der">Proyectos Digitales</div>
+        <div class="esquina-izq">
+            <span class="glass-text mobil-titulo">Rómulo Fioravante</span>
+            <span class="glass-text mobil-proyectos" style="display:none; margin-left:8px;">Proyectos Digitales</span>
+        </div>
+        <div class="texto-central"><strong>Aplicaciones Html-SPA. Sistemas digitales. Uso de Inteligencia Artificial para diseño y programación.</strong></div>
+        <div class="esquina-der">
+            <span class="glass-text">Proyectos Digitales</span>
+        </div>
     </div>
 
     <div class="universo" id="universo">
         
-        <div class="item-orbital i1 bg-judicial"><span>Sistema Judicial</span></div>
-        <div class="item-orbital i2 bg-finanzas"><span>Sistema Finanzas</span></div>
-        <div class="item-orbital i3 bg-astronomia"><span>Sistema Astronomía</span></div>
-        <div class="item-orbital i4 bg-biblia"><span>Sistema Biblia</span></div>
-        <div class="item-orbital i5 bg-genealogia"><span>Sistema Genealogía</span></div>
-        <div class="item-orbital i6 bg-farmacia"><span>Sistema Farmacia</span></div>
-        <div class="item-orbital i7 bg-hogar"><span>Sistema Hogar</span></div>
+        <div class="item-orbital i1 bg-judicial" data-sistema="Sistema Judicial"><span>Sistema Judicial</span></div>
+        <div class="item-orbital i2 bg-finanzas" data-sistema="Sistema Finanzas"><span>Sistema Finanzas</span></div>
+        <div class="item-orbital i3 bg-astronomia" data-sistema="Sistema Astronomía"><span>Sistema Astronomía</span></div>
+        <div class="item-orbital i4 bg-biblia" data-sistema="Sistema Biblia"><span>Sistema Biblia</span></div>
+        <div class="item-orbital i5 bg-genealogia" data-sistema="Sistema Genealogía"><span>Sistema Genealogía</span></div>
+        <div class="item-orbital i6 bg-farmacia" data-sistema="Sistema Farmacia"><span>Sistema Farmacia</span></div>
+        <div class="item-orbital i7 bg-hogar" data-sistema="Sistema Hogar"><span>Sistema Hogar</span></div>
 
         <div class="contenedor-central" onclick="toggleMenu()" title="Pulsa para ver los sistemas">
             <img src="https://github.com/fioravanteweb/inicio/blob/main/rf.png?raw=true" alt="Imagen Central">
         </div>
-        
+
+    </div>
+
+    <!-- PANEL LATERAL DERECHO (glass, sin X) -->
+    <div id="panel-derecho" class="panel-lateral">
+        <h2 id="titulo-derecho">Título</h2>
+        <div class="seccion">
+            <strong>Características</strong>
+            <p id="descripcion-derecho">Descripción del sistema.</p>
+        </div>
+        <div class="seccion">
+            <strong>Link de acceso</strong>
+            <p class="link-url" id="link-derecho">https://ejemplo.com</p>
+        </div>
     </div>
 
     <div class="barra barra-inferior">
-        Bienvenido, pulsa sobre la imagen central y accede a todos nuestros proyectos digitales
+        <div class="inf-izq">Este sitio es una AppWeb</div>
+        <div class="inf-centro"><strong>Bienvenido, pulsa sobre la imagen central y accede a todos nuestros proyectos digitales</strong></div>
+        <div class="inf-der contacto-wrapper" id="contacto-link">
+            <span class="glass-contacto">Contacto ahora</span>
+            <div id="modal-contacto" class="modal-contacto">
+                <p class="destacado">Posadas.Argentina</p>
+                <p><strong>Whatsapp:</strong> <a href="https://wa.me/549376485728" target="_blank">+549 376 485728</a></p>
+                <p><strong>Email:</strong> <a href="mailto:setiposadas@gmail.com">setiposadas@gmail.com</a></p>
+            </div>
+        </div>
     </div>
 
     <script>
+        // ----- TOGGLE DEL MENÚ -----
         function toggleMenu() {
             const universo = document.getElementById('universo');
             universo.classList.toggle('activo');
+            if (!universo.classList.contains('activo')) {
+                cerrarPanel();
+            }
         }
+
+        // ----- DATOS DE CADA SISTEMA (con links de acceso) -----
+        const infoSistemas = {
+            'Sistema Judicial': {
+                desc: 'Gestión integral de causas judiciales, expedientes digitales, estadísticas y seguimiento de procesos legales.',
+                link: 'https://sistemajudicial.ejemplo.com'
+            },
+            'Sistema Finanzas': {
+                desc: 'Control de presupuestos, facturación electrónica, análisis económico y proyecciones financieras.',
+                link: 'https://sistemafinanzas.ejemplo.com'
+            },
+            'Sistema Astronomía': {
+                desc: 'Seguimiento de cuerpos celestes, efemérides, observación astronómica y catálogo de estrellas.',
+                link: 'https://sistemaastronomia.ejemplo.com'
+            },
+            'Sistema Biblia': {
+                desc: 'Estudio de textos sagrados, concordancia bíblica, comentarios y herramientas de investigación teológica.',
+                link: 'https://sistemabiblia.ejemplo.com'
+            },
+            'Sistema Genealogía': {
+                desc: 'Construcción de árboles genealógicos, registros históricos, análisis de ADN y parentesco.',
+                link: 'https://sistemagenealogia.ejemplo.com'
+            },
+            'Sistema Farmacia': {
+                desc: 'Gestión de inventario de medicamentos, recetas electrónicas, control de stock y caducidades.',
+                link: 'https://sistemafarmacia.ejemplo.com'
+            },
+            'Sistema Hogar': {
+                desc: 'Automatización del hogar, seguridad inteligente, gestión energética y control de dispositivos.',
+                link: 'https://sistemahogar.ejemplo.com'
+            }
+        };
+
+        // ----- ELEMENTOS -----
+        const universo = document.getElementById('universo');
+        const itemsOrbitales = document.querySelectorAll('.item-orbital');
+        const panelDer = document.getElementById('panel-derecho');
+        const tituloDer = document.getElementById('titulo-derecho');
+        const descDer = document.getElementById('descripcion-derecho');
+        const linkDer = document.getElementById('link-derecho');
+
+        // ----- FUNCIONES PARA PANEL LATERAL -----
+        function mostrarPanel(sistema) {
+            const data = infoSistemas[sistema];
+            if (!data) return;
+            tituloDer.textContent = sistema;
+            descDer.textContent = data.desc;
+            linkDer.textContent = data.link;
+            panelDer.classList.add('visible');
+        }
+
+        function cerrarPanel() {
+            panelDer.classList.remove('visible');
+        }
+
+        // ----- EVENTOS DE LOS ÍTEMS ORBITALES -----
+        itemsOrbitales.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (!universo.classList.contains('activo')) return;
+                const sistema = this.dataset.sistema;
+                mostrarPanel(sistema);
+            });
+        });
+
+        // Cerrar panel al hacer clic fuera de él y fuera de los items
+        document.addEventListener('click', function(e) {
+            const target = e.target;
+            const esItem = target.closest('.item-orbital');
+            const esPanel = target.closest('#panel-derecho');
+            const esContenedorCentral = target.closest('.contenedor-central');
+            const esContacto = target.closest('#contacto-link');
+            if (!esItem && !esPanel && !esContenedorCentral && !esContacto) {
+                cerrarPanel();
+            }
+        });
+
+        // También cerrar al hacer clic en la imagen central
+        document.querySelector('.contenedor-central').addEventListener('click', function() {
+            if (panelDer.classList.contains('visible')) {
+                cerrarPanel();
+            }
+        });
+
+        // ----- MODAL DE CONTACTO (con enlaces funcionales) -----
+        const contactoLink = document.getElementById('contacto-link');
+        const modalContacto = document.getElementById('modal-contacto');
+
+        contactoLink.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const visible = modalContacto.style.display === 'block';
+            modalContacto.style.display = visible ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', function(e) {
+            const target = e.target;
+            if (modalContacto.style.display === 'block') {
+                const esContacto = target.closest('#contacto-link');
+                if (!esContacto) {
+                    modalContacto.style.display = 'none';
+                }
+            }
+        });
+
+        modalContacto.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // ----- AJUSTE PARA MÓVIL: mostrar texto combinado en la barra superior -----
+        function ajustarMobil() {
+            const esMovil = window.innerWidth <= 900;
+            const mobilProyectos = document.querySelector('.mobil-proyectos');
+            if (esMovil) {
+                mobilProyectos.style.display = 'inline';
+                document.querySelector('.barra-superior .esquina-der').style.display = 'none';
+                // Ajustar el padding del contenedor izquierdo para centrar
+                document.querySelector('.barra-superior .esquina-izq').style.justifyContent = 'center';
+                document.querySelector('.barra-superior .esquina-izq').style.gap = '8px';
+            } else {
+                mobilProyectos.style.display = 'none';
+                document.querySelector('.barra-superior .esquina-der').style.display = 'flex';
+                document.querySelector('.barra-superior .esquina-izq').style.justifyContent = 'flex-start';
+            }
+        }
+
+        window.addEventListener('resize', ajustarMobil);
+        ajustarMobil();
     </script>
 
 </body>
