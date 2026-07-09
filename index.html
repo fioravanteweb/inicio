@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi AppWeb SPA - Diseño Ajustado</title>
+    <title>RomuloFioravante</title>
     <style>
         /* Reseteo y fondo con cuadrícula suave */
         html, body {
@@ -247,7 +247,7 @@
             position: fixed;
             right: 30px;
             top: 25vh;
-            height: 50vh;
+            max-height: 70vh;
             width: 320px;
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(10px);
@@ -256,10 +256,10 @@
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             z-index: 80;
-            padding: 25px 22px;
+            padding: 18px 16px;
             box-sizing: border-box;
             overflow-y: auto;
-            transition: transform 0.35s ease, opacity 0.35s ease;
+            transition: transform 0.35s ease, opacity 0.35s ease, border-color 0.3s ease;
             transform: translateX(calc(110% + 30px));
             opacity: 0;
             pointer-events: none;
@@ -272,36 +272,46 @@
         }
 
         .panel-lateral h2 {
-            margin: 0 0 12px 0;
-            font-size: 22px;
+            margin: 0 0 8px 0;
+            font-size: 20px;
             color: #001f3f;
-            border-bottom: 2px solid rgba(0, 0, 255, 0.3);
-            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(0,0,255,0.2);
+            padding-bottom: 6px;
         }
 
         .panel-lateral .seccion {
-            margin-top: 16px;
+            margin-top: 10px;
         }
 
         .panel-lateral .seccion strong {
             display: block;
-            font-size: 16px;
+            font-size: 14px;
             color: #001f3f;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .panel-lateral .seccion p {
             margin: 0;
-            font-size: 15px;
-            line-height: 1.5;
+            font-size: 14px;
+            line-height: 1.4;
             color: #222;
         }
 
-        .panel-lateral .link-url {
-            word-break: break-all;
+        .links-container {
+            margin-top: 2px;
+        }
+        .links-container a {
+            display: block;
             color: #001f3f;
             text-decoration: underline;
             font-weight: normal;
+            word-break: break-all;
+            margin: 3px 0;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+        .links-container a:hover {
+            color: #0055ff;
         }
 
         /* ===== MODAL DE CONTACTO ===== */
@@ -335,12 +345,12 @@
         .modal-contacto .destacado {
             font-size: 16px;
             font-weight: bold;
-            color: #00bfff !important; /* celeste */
+            color: #0055ff !important;
             margin-bottom: 6px;
         }
 
         .modal-contacto a {
-            color: #1e90ff !important; /* azul vibrante */
+            color: #1e90ff !important;
             text-decoration: none;
             font-weight: bold;
         }
@@ -360,7 +370,7 @@
             display: none;
         }
 
-        /* En escritorio se muestran */
+        /* En escritorio se muestran y se aplica tamaño destacado */
         @media (min-width: 901px) {
             .barra-superior .texto-central,
             .barra-inferior .inf-izq,
@@ -369,6 +379,15 @@
             }
             .barra-superior {
                 grid-template-columns: 100px 1fr 100px;
+            }
+            /* Tamaño destacado para Rómulo y Proyectos en escritorio */
+            .glass-text {
+                font-size: 22px !important;
+                padding: 8px 20px;
+                color: #00d4ff !important;
+                border-color: rgba(0, 212, 255, 0.5);
+                background: rgba(0, 191, 255, 0.2);
+                box-shadow: 0 4px 20px rgba(0, 191, 255, 0.3);
             }
         }
 
@@ -388,7 +407,6 @@
             .barra-superior .esquina-der {
                 display: none;
             }
-            /* En móvil mostramos el nombre y proyectos juntos en un solo glass */
             .barra-superior .mobil-titulo {
                 display: inline-block;
             }
@@ -409,13 +427,14 @@
                 width: 260px;
                 right: 15px;
                 top: 20vh;
-                height: 60vh;
-                padding: 20px 16px;
+                max-height: 60vh;
+                padding: 16px 14px;
                 transform: translateX(calc(110% + 15px));
             }
-            .panel-lateral h2 { font-size: 19px; }
-            .panel-lateral .seccion p { font-size: 14px; }
+            .panel-lateral h2 { font-size: 18px; }
+            .panel-lateral .seccion p { font-size: 13px; }
             .modal-contacto { width: 180px; right: auto; left: 0; }
+            .links-container a { font-size: 12px; }
         }
 
         @media (max-width: 600px) {
@@ -424,12 +443,13 @@
                 width: 220px;
                 right: 10px;
                 top: 15vh;
-                height: 70vh;
-                padding: 16px 14px;
+                max-height: 70vh;
+                padding: 14px 12px;
             }
-            .panel-lateral h2 { font-size: 17px; }
-            .panel-lateral .seccion p { font-size: 13px; }
+            .panel-lateral h2 { font-size: 16px; }
+            .panel-lateral .seccion p { font-size: 12px; }
             .modal-contacto { width: 160px; }
+            .links-container a { font-size: 11px; }
         }
 
         @media (max-width: 400px) {
@@ -437,11 +457,13 @@
             .panel-lateral {
                 width: 180px;
                 right: 8px;
-                padding: 12px 10px;
+                padding: 10px 8px;
+                max-height: 75vh;
             }
-            .panel-lateral h2 { font-size: 15px; }
-            .panel-lateral .seccion p { font-size: 12px; }
+            .panel-lateral h2 { font-size: 14px; }
+            .panel-lateral .seccion p { font-size: 11px; }
             .modal-contacto { width: 150px; padding: 10px 12px; }
+            .links-container a { font-size: 10px; }
         }
     </style>
 </head>
@@ -482,8 +504,8 @@
             <p id="descripcion-derecho">Descripción del sistema.</p>
         </div>
         <div class="seccion">
-            <strong>Link de acceso</strong>
-            <p class="link-url" id="link-derecho">https://ejemplo.com</p>
+            <strong>Link(s) de acceso</strong>
+            <div id="links-derecho" class="links-container"></div>
         </div>
     </div>
 
@@ -513,33 +535,52 @@
         // ----- DATOS DE CADA SISTEMA (con links de acceso) -----
         const infoSistemas = {
             'Sistema Judicial': {
-                desc: 'Gestión integral de causas judiciales, expedientes digitales, estadísticas y seguimiento de procesos legales.',
-                link: 'https://sistemajudicial.ejemplo.com'
-            },
-            'Sistema Finanzas': {
-                desc: 'Control de presupuestos, facturación electrónica, análisis económico y proyecciones financieras.',
-                link: 'https://sistemafinanzas.ejemplo.com'
-            },
-            'Sistema Astronomía': {
-                desc: 'Seguimiento de cuerpos celestes, efemérides, observación astronómica y catálogo de estrellas.',
-                link: 'https://sistemaastronomia.ejemplo.com'
-            },
-            'Sistema Biblia': {
-                desc: 'Estudio de textos sagrados, concordancia bíblica, comentarios y herramientas de investigación teológica.',
-                link: 'https://sistemabiblia.ejemplo.com'
-            },
-            'Sistema Genealogía': {
-                desc: 'Construcción de árboles genealógicos, registros históricos, análisis de ADN y parentesco.',
-                link: 'https://sistemagenealogia.ejemplo.com'
-            },
-            'Sistema Farmacia': {
-                desc: 'Gestión de inventario de medicamentos, recetas electrónicas, control de stock y caducidades.',
-                link: 'https://sistemafarmacia.ejemplo.com'
+                desc: 'Aplicación web para gestión integral de expedientes, seguimiento de causas, registros de dictámenes, audiencias, diligencias, escritos, control de vencimientos y recursos de una Defensoría Oficial. Implementado en la Defensoría Oficial Civil y Comercial 6 Ministerio Público de Misiones. Posadas, Argentina. Desde Septiembre 2025. Actualmente operativo y con actualizaciones permanentes.',
+                links: [
+                    'https://sistemadigital.github.io/defensor-secretarios/',
+                    'https://sistemadigital.github.io/empleados/',
+                    'https://sistemadigital.github.io/consultas-turnos/clientes',
+                    'https://admindefensoria6.github.io/rf-causas/',
+                    'https://sistema-secretarios.github.io/dra-riveros/',
+                    'https://sistema-secretarios.github.io/dra-corrales/',
+                    'https://sistema-secretarios.github.io/dr-magnani/'
+                ]
             },
             'Sistema Hogar': {
-                desc: 'Automatización del hogar, seguridad inteligente, gestión energética y control de dispositivos.',
-                link: 'https://sistemahogar.ejemplo.com'
+                desc: 'Aplicación web para gestión de despensa y heladera del Hogar.',
+                links: ['https://app-fioravante.github.io/stock-hogar/']
+            },
+            'Sistema Astronomía': {
+                desc: 'Aplicación web para efemérides, uso de telescopio, control de clima, mapa estelar local, etc.',
+                links: ['https://app-fioravante.github.io/astroamigos-misiones/']
+            },
+            'Sistema Genealogía': {
+                desc: 'Aplicación web para registro de ancestros, árbol familiar, mapa de ciudades, etc.',
+                links: ['https://app-fioravante.github.io/familiia/']
+            },
+            'Sistema Biblia': {
+                desc: 'Aplicación web para lectura y búsqueda de textos bíblicos. Versión Reina Valera 1960.',
+                links: ['https://app-fioravante.github.io/appbiblia/']
+            },
+            'Sistema Finanzas': {
+                desc: 'Aplicación web para gestión de ingresos y gastos, estadística mensual, etc.',
+                links: ['https://app-fioravante.github.io/finanzas/']
+            },
+            'Sistema Farmacia': {
+                desc: 'Aplicación web para gestión de vencimiento de medicamentos, registro, etc.',
+                links: ['https://app-fioravante.github.io/medicamentos-hogar/']
             }
+        };
+
+        // Mapeo de colores para cada sistema (coinciden con las clases bg-*)
+        const coloresSistema = {
+            'Sistema Judicial': '#e63946',
+            'Sistema Finanzas': '#2a9d8f',
+            'Sistema Astronomía': '#3f37c9',
+            'Sistema Biblia': '#f4a261',
+            'Sistema Genealogía': '#9d4edd',
+            'Sistema Farmacia': '#e76f51',
+            'Sistema Hogar': '#48cae4'
         };
 
         // ----- ELEMENTOS -----
@@ -548,7 +589,7 @@
         const panelDer = document.getElementById('panel-derecho');
         const tituloDer = document.getElementById('titulo-derecho');
         const descDer = document.getElementById('descripcion-derecho');
-        const linkDer = document.getElementById('link-derecho');
+        const linksDer = document.getElementById('links-derecho');
 
         // ----- FUNCIONES PARA PANEL LATERAL -----
         function mostrarPanel(sistema) {
@@ -556,7 +597,18 @@
             if (!data) return;
             tituloDer.textContent = sistema;
             descDer.textContent = data.desc;
-            linkDer.textContent = data.link;
+            linksDer.innerHTML = '';
+            data.links.forEach(url => {
+                const a = document.createElement('a');
+                a.href = url;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                a.textContent = url;
+                linksDer.appendChild(a);
+            });
+            // Actualizar borde con el color del sistema
+            const color = coloresSistema[sistema] || '#0000ff';
+            panelDer.style.borderColor = color;
             panelDer.classList.add('visible');
         }
 
@@ -624,7 +676,6 @@
             if (esMovil) {
                 mobilProyectos.style.display = 'inline';
                 document.querySelector('.barra-superior .esquina-der').style.display = 'none';
-                // Ajustar el padding del contenedor izquierdo para centrar
                 document.querySelector('.barra-superior .esquina-izq').style.justifyContent = 'center';
                 document.querySelector('.barra-superior .esquina-izq').style.gap = '8px';
             } else {
