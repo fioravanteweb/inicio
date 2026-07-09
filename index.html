@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi AppWeb SPA - Diseño Ajustado</title>
+    <style>
+        /* Reseteo básico y fondo gris opaco suave */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #e2e2e2; /* Gris opaco suave */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        /* ----- PANELES SUPERIOR E INFERIOR ----- */
+        .barra {
+            position: fixed;
+            left: 0;
+            width: 100%;
+            background-color: #001f3f; /* Azul oscuro */
+            color: #ffffff; /* Texto blanco para contrastar con el fondo oscuro */
+            z-index: 100;
+            box-sizing: border-box;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Barra Arriba */
+        .barra-superior {
+            top: 0;
+            display: grid;
+            grid-template-columns: 100px 1fr 100px;
+            align-items: center;
+            padding: 15px 30px;
+        }
+
+        .barra-superior .esquina-izq {
+            font-weight: bold;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        .barra-superior .texto-central {
+            text-align: center;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .barra-superior .esquina-der {
+            font-weight: bold;
+            font-size: 16px;
+            text-align: right;
+        }
+
+        /* Barra Abajo */
+        .barra-inferior {
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 20px;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        /* ----- CONTENEDOR PRINCIPAL ----- */
+        .universo {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+            z-index: 50;
+        }
+
+        /* ----- CONTENEDOR CENTRAL (TAMAÑO REDUCIDO) ----- */
+        .contenedor-central {
+            width: 350px; /* Reducido para dar espacio a los círculos menores */
+            height: 350px;
+            border-radius: 50%;
+            border: 10px solid #0000ff;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+            cursor: pointer;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .contenedor-central:hover {
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+            transform: scale(1.02);
+        }
+
+        .universo.activo .contenedor-central {
+            transform: scale(0.85); /* Se encoge un poco al abrir el menú */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .contenedor-central img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* ----- CONTENEDORES ORBITALES ----- */
+        .item-orbital {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #0000ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            top: 50%;
+            left: 50%;
+            margin-top: -75px;
+            margin-left: -75px;
+            
+            opacity: 0;
+            pointer-events: none;
+            z-index: 5;
+            
+            transition: all 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55), filter 0.3s ease;
+            transform: rotate(0deg) translateY(0px) rotate(0deg) scale(0);
+        }
+
+        .item-orbital:hover { filter: brightness(0.8); cursor: pointer; }
+
+        .item-orbital span {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 15px;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+            padding: 0 10px;
+            z-index: 2;
+        }
+
+        /* ----- COLORES SÓLIDOS ----- */
+        .bg-judicial   { background-color: #e63946; }
+        .bg-finanzas   { background-color: #2a9d8f; }
+        .bg-astronomia { background-color: #3f37c9; }
+        .bg-biblia     { background-color: #f4a261; }
+        .bg-genealogia { background-color: #9d4edd; }
+        .bg-farmacia   { background-color: #e76f51; }
+        .bg-hogar      { background-color: #48cae4; }
+
+        /* ----- POSICIONES MATEMÁTICAS EN ÓRBITA (RADIO AJUSTADO) ----- */
+        /* Se redujo el translateY a -280px para acercarlos al contenedor central */
+        .universo.activo .item-orbital {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .universo.activo .i1 { transform: rotate(0deg) translateY(-280px) rotate(0deg) scale(1); }
+        .universo.activo .i2 { transform: rotate(51.43deg) translateY(-280px) rotate(-51.43deg) scale(1); }
+        .universo.activo .i3 { transform: rotate(102.86deg) translateY(-280px) rotate(-102.86deg) scale(1); }
+        .universo.activo .i4 { transform: rotate(154.29deg) translateY(-280px) rotate(-154.29deg) scale(1); }
+        .universo.activo .i5 { transform: rotate(205.71deg) translateY(-280px) rotate(-205.71deg) scale(1); }
+        .universo.activo .i6 { transform: rotate(257.14deg) translateY(-280px) rotate(-257.14deg) scale(1); }
+        .universo.activo .i7 { transform: rotate(308.57deg) translateY(-280px) rotate(-308.57deg) scale(1); }
+
+        /* ----- RESPONSIVE ----- */
+        @media (max-width: 900px) { 
+            .universo { transform: scale(0.8); } /* Escala ajustada para móviles */
+            
+            .barra-superior {
+                grid-template-columns: 1fr;
+                gap: 5px;
+                padding: 10px;
+            }
+            .barra-superior .esquina-izq, .barra-superior .esquina-der { text-align: center; }
+        }
+        @media (max-width: 600px) { .universo { transform: scale(0.6); } }
+        @media (max-width: 400px) { .universo { transform: scale(0.45); } }
+    </style>
+</head>
+<body>
+
+    <div class="barra barra-superior">
+        <div class="esquina-izq">Rómulo Fioravante</div>
+        <div class="texto-central">Aplicaciones Html-SPA. Sistemas digitales. Uso de Inteligencia Artificial para diseño y programación.</div>
+        <div class="esquina-der">Proyectos Digitales</div>
+    </div>
+
+    <div class="universo" id="universo">
+        
+        <div class="item-orbital i1 bg-judicial"><span>Sistema Judicial</span></div>
+        <div class="item-orbital i2 bg-finanzas"><span>Sistema Finanzas</span></div>
+        <div class="item-orbital i3 bg-astronomia"><span>Sistema Astronomía</span></div>
+        <div class="item-orbital i4 bg-biblia"><span>Sistema Biblia</span></div>
+        <div class="item-orbital i5 bg-genealogia"><span>Sistema Genealogía</span></div>
+        <div class="item-orbital i6 bg-farmacia"><span>Sistema Farmacia</span></div>
+        <div class="item-orbital i7 bg-hogar"><span>Sistema Hogar</span></div>
+
+        <div class="contenedor-central" onclick="toggleMenu()" title="Pulsa para ver los sistemas">
+            <img src="https://github.com/fioravanteweb/inicio/blob/main/rf.png?raw=true" alt="Imagen Central">
+        </div>
+        
+    </div>
+
+    <div class="barra barra-inferior">
+        Bienvenido, pulsa sobre la imagen central y accede a todos nuestros proyectos digitales
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const universo = document.getElementById('universo');
+            universo.classList.toggle('activo');
+        }
+    </script>
+
+</body>
+</html>
